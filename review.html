@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Origin — hue selector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f8f5;
+      --ink: #1a1a18;
+      --muted: #888880;
+      --accent: #c8502a;
+      --mono: 'DM Mono', monospace;
+      --serif: 'DM Serif Display', serif;
+    }
+
+    html { background: var(--bg); color: var(--ink); font-family: var(--mono); }
+
+    body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0 0;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    /* REVIEW LAYOUT */
+    .review-wrap {
+      padding-top: 80px;
+    }
+
+    .back-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 60px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--ink); }
+
+    /* BIG ALBUM ART */
+    .album-hero {
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 64px;
+      background: #2a2a2a;
+    }
+
+    .album-hero-placeholder {
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 13px;
+      margin: 0 auto 64px;
+    }
+
+    /* TWO-COLUMN REVIEW BODY */
+    .review-body {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* LEFT: DETAILS SIDEBAR */
+    .review-sidebar h1 {
+      font-family: var(--mono);
+      font-size: 32px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .review-meta {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 2.4;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* RIGHT: REVIEW CONTENT */
+    .review-content section {
+      margin-bottom: 52px;
+    }
+
+    .review-content .label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .review-content p, .review-content .body-text {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--ink);
+      opacity: 0.85;
+    }
+
+    .review-content .track-list {
+      list-style: none;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 2.2;
+      opacity: 0.85;
+    }
+
+    .review-content .track-list li::before {
+      content: "— ";
+      color: var(--muted);
+    }
+
+    /* VERDICT */
+    .verdict-block {
+      border-top: 1px solid #e0dfd9;
+      padding: 32px 0;
+      margin-bottom: 52px;
+    }
+
+    .verdict-block .label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .verdict-text {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      opacity: 0.85;
+    }
+
+    .score {
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    /* ALSO CHECK OUT */
+    .also-check {
+      margin-top: 80px;
+      padding-top: 60px;
+      border-top: 1px solid #e0dfd9;
+    }
+
+    .also-check .label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 40px;
+      display: block;
+    }
+
+    .also-check a {
+      display: inline-block;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .also-check a:hover { opacity: 0.6; }
+
+    .also-check .rec-art-placeholder {
+      width: 280px;
+      aspect-ratio: 1;
+      background: #e8e7e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 11px;
+      margin-bottom: 20px;
+    }
+
+    .also-check img {
+      width: 280px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .also-check .rec-name {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .also-check .rec-artist {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 80px 0 40px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      border-top: 1px solid #e0dfd9;
+      margin-top: 80px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">hue selector</a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="playlists.html">playlists</a></li>
+      <li><a href="#">articles</a></li>
+    </ul>
+  </nav>
+
+  <div class="review-wrap">
+    <a class="back-link" href="javascript:history.back()">← Back</a>
+
+    <!-- BIG ALBUM ART -->
+    <!-- To use your own image: replace the div below with:
+         <img class="album-hero" src="images/origin.jpg" alt="Origin by Vanilla"> -->
+    <div class="album-hero-placeholder">[ album art ]</div>
+
+    <div class="review-body">
+
+      <!-- SIDEBAR -->
+      <div class="review-sidebar">
+        <h1>Origin</h1>
+        <div class="review-meta">
+          Artist: Vanilla<br>
+          Genre: Electronic, Hip-Hop<br>
+          Release Date: 20 Sep 2015<br>
+          Record Label: Self-released
+        </div>
+      </div>
+
+      <!-- MAIN REVIEW -->
+      <div class="review-content">
+
+        <section>
+          <span class="label">About</span>
+          <p>A sample-heavy hip-hop, soul, funk, hi-fidelity electronic album with enough groove to carry your whole weekend. A warm, sunny take on modern day Nujabes, bridging old school soul and modern day electronic music. Easily top 50 albums of all time for me and definitely worthy of a full listen.</p>
+        </section>
+
+        <section>
+          <span class="label">Favorite track</span>
+          <p>Traveler</p>
+        </section>
+
+        <section>
+          <span class="label">Must listen to tracks</span>
+          <ul class="track-list">
+            <li>Dreamcatcher</li>
+            <li>All in My Mind</li>
+            <li>Summer (alongside a classic, <em>Summer Madness</em>)</li>
+            <li>Swept Away</li>
+          </ul>
+        </section>
+
+        <div class="verdict-block">
+          <span class="label">Verdict</span>
+          <p class="verdict-text">A summer evening classic. An easy <span class="score">9/10</span> to play on your happiest of days.</p>
+        </div>
+
+        <!-- ALSO CHECK OUT -->
+        <div class="also-check">
+          <span class="label">If you like this, check out</span>
+          <!-- To use your own image: replace the div below with:
+               <img src="images/metaphorical-music.jpg" alt="Metaphorical Music by Nujabes"> -->
+          <a href="#">
+            <div class="rec-art-placeholder">[ album art ]</div>
+            <p class="rec-name">Metaphorical Music</p>
+            <p class="rec-artist">Nujabes</p>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    hue selector &nbsp;·&nbsp; all words my own
+  </footer>
+
+</body>
+</html>
