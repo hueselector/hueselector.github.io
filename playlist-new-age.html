@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Age — hue selector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f8f5;
+      --ink: #1a1a18;
+      --muted: #888880;
+      --accent: #c8502a;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { background: var(--bg); color: var(--ink); font-family: var(--mono); }
+
+    body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0 0;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    /* PLAYLIST HEADER */
+    .playlist-header {
+      padding: 100px 0 80px;
+      border-bottom: 1px solid #e0dfd9;
+      margin-bottom: 0;
+    }
+
+    .back-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--ink); }
+
+    .playlist-header h1 {
+      font-family: var(--mono);
+      font-size: 48px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .playlist-header .tags {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      letter-spacing: 0.04em;
+    }
+
+    .playlist-header .desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--ink);
+      opacity: 0.7;
+      max-width: 520px;
+    }
+
+    /* ALBUM GRID */
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .album-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 60px 0;
+      border-bottom: 1px solid #e0dfd9;
+      padding-right: 40px;
+      transition: opacity 0.2s;
+    }
+
+    .album-card:hover { opacity: 0.65; }
+
+    .album-card .art-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #e8e7e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 11px;
+      margin-bottom: 24px;
+    }
+
+    .album-card img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .album-card .album-name {
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .album-card .artist {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .album-card .year {
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    footer {
+      padding: 60px 0 40px;
+      border-top: 1px solid #e0dfd9;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">hue selector</a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="playlists.html">playlists</a></li>
+      <li><a href="#">articles</a></li>
+    </ul>
+  </nav>
+
+  <div class="playlist-header">
+    <a class="back-link" href="playlists.html">← All playlists</a>
+    <h1>New Age</h1>
+    <p class="tags">Ambient, Environmental</p>
+    <p class="desc">Static architectures for deep listening. A study in environmental transparency and the soft geometry of silence.</p>
+  </div>
+
+  <div class="album-grid">
+
+    <!-- ALBUM CARD 1 -->
+    <!-- Replace art-placeholder with: <img src="images/changes-in-air.jpg" alt="Changes in Air"> -->
+    <a class="album-card" href="review.html">
+      <div class="art-placeholder">[ album art ]</div>
+      <p class="album-name">Changes in Air</p>
+      <p class="artist">Kara-Lis Coverdale</p>
+      <p class="year">2025</p>
+    </a>
+
+    <!-- ALBUM CARD 2 -->
+    <a class="album-card" href="#">
+      <div class="art-placeholder">[ album art ]</div>
+      <p class="album-name">Replica</p>
+      <p class="artist">Oneohtrix Point Never</p>
+      <p class="year">2011</p>
+    </a>
+
+    <!-- ALBUM CARD 3 -->
+    <a class="album-card" href="#">
+      <div class="art-placeholder">[ album art ]</div>
+      <p class="album-name">Ambient 1: Music for Airports</p>
+      <p class="artist">Brian Eno</p>
+      <p class="year">1978</p>
+    </a>
+
+    <!-- Add more album cards here following the same pattern -->
+
+  </div>
+
+  <footer>
+    hue selector &nbsp;·&nbsp; all words my own
+  </footer>
+
+</body>
+</html>

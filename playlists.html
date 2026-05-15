@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>playlists — hue selector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f8f5;
+      --ink: #1a1a18;
+      --muted: #888880;
+      --accent: #c8502a;
+      --mono: 'DM Mono', monospace;
+      --serif: 'DM Serif Display', serif;
+    }
+
+    html { background: var(--bg); color: var(--ink); font-family: var(--mono); }
+
+    body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 0 0;
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    .hero {
+      padding: 120px 0 80px;
+    }
+
+    .hero p {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    /* PLAYLIST ROWS */
+    .playlist-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .playlist-row {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 64px;
+      align-items: start;
+      padding: 80px 0;
+      border-top: 1px solid #e0dfd9;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .playlist-row:hover { opacity: 0.7; }
+
+    .playlist-row .art-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #e8e7e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+
+    .playlist-row img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .playlist-info {
+      padding-top: 8px;
+    }
+
+    .playlist-name {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .playlist-tags {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      letter-spacing: 0.04em;
+    }
+
+    .playlist-desc {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--ink);
+      opacity: 0.75;
+      max-width: 440px;
+    }
+
+    footer {
+      padding: 60px 0 40px;
+      border-top: 1px solid #e0dfd9;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">hue selector</a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="playlists.html">playlists</a></li>
+      <li><a href="#">articles</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p>Below you'll find some playlists.<br>These are made up of albums I've reviewed.<br>Hope you find something you like.</p>
+  </section>
+
+  <div class="playlist-list">
+
+    <!-- PLAYLIST: NEW AGE -->
+    <!-- Replace art-placeholder with: <img src="images/new-age-cover.jpg" alt="New Age playlist"> -->
+    <a class="playlist-row" href="playlist-new-age.html">
+      <div class="art-placeholder">[ playlist art ]</div>
+      <div class="playlist-info">
+        <h2 class="playlist-name">New Age</h2>
+        <p class="playlist-tags">Ambient, Environmental</p>
+        <p class="playlist-desc">Static architectures for deep listening. A study in environmental transparency and the soft geometry of silence.</p>
+      </div>
+    </a>
+
+    <!-- PLAYLIST: TRIP-HOP -->
+    <a class="playlist-row" href="#">
+      <div class="art-placeholder">[ playlist art ]</div>
+      <div class="playlist-info">
+        <h2 class="playlist-name">Trip-Hop</h2>
+        <p class="playlist-tags">Downtempo, Melancholic</p>
+        <p class="playlist-desc">Mid-tempo noir and fractured grooves. A collection of weighted rhythms designed for the blue hour and the city in motion.</p>
+      </div>
+    </a>
+
+    <!-- PLAYLIST: ELECTRONIC / HIP-HOP -->
+    <a class="playlist-row" href="#">
+      <div class="art-placeholder">[ playlist art ]</div>
+      <div class="playlist-info">
+        <h2 class="playlist-name">Electronic / Hip-Hop</h2>
+        <p class="playlist-tags">Electronic, Soul, Funk</p>
+        <p class="playlist-desc">Sample-heavy, groove-forward, warm. Albums that blur the line between beat-making and full composition.</p>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    hue selector &nbsp;·&nbsp; all words my own
+  </footer>
+
+</body>
+</html>
