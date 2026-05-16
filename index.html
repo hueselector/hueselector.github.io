@@ -6,7 +6,7 @@
   <title>hue selector</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:wght@700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,10 +15,11 @@
       --ink: #1a1a18;
       --muted: #888880;
       --mono: 'DM Mono', monospace;
+      --serif: 'Lora', serif;
+      --grotesk: 'Space Grotesk', sans-serif;
     }
 
     html { background: var(--bg); color: var(--ink); font-family: var(--mono); }
-
     body { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
 
     /* NAV */
@@ -27,29 +28,93 @@
       justify-content: space-between;
       align-items: center;
       padding: 32px 0 0;
+      position: relative;
     }
 
-    .nav-logo { font-size: 14px; font-weight: 400; color: var(--ink); text-decoration: none; }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      font-style: normal;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
 
     .nav-links { display: flex; gap: 48px; list-style: none; }
 
     .nav-links a {
-  font-size: 13px; color: #4a4a48; text-decoration: none;
-  opacity: 1; transition: opacity 0.2s;
-}
+      font-family: var(--mono);
+      font-size: 12px; color: #4a4a48; text-decoration: none;
+      letter-spacing: 0.06em;
+      opacity: 1; transition: opacity 0.2s;
+    }
 
-    .nav-links a:hover { opacity: 1; }
+    .nav-links a:hover { opacity: 0.5; }
+
+    /* HAMBURGER */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--ink);
+      transition: all 0.25s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      position: absolute;
+      top: calc(100% + 16px);
+      right: 0;
+      background: var(--bg);
+      border: 1px solid #e0dfd9;
+      z-index: 100;
+      min-width: 160px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #4a4a48;
+      text-decoration: none;
+      padding: 16px 24px;
+      border-bottom: 1px solid #e0dfd9;
+      letter-spacing: 0.06em;
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { background: #f0efe9; }
 
     /* HERO */
     .hero { padding: 120px 0 80px; }
 
     .hero p {
-  font-size: 13px; font-weight: 300; line-height: 1.9;
-  color: #4a4a48; letter-spacing: 0.02em;
-}
+      font-family: var(--mono);
+      font-size: 13px; font-weight: 300; line-height: 1.9;
+      color: #4a4a48; letter-spacing: 0.02em;
+    }
 
     /* SECTION LABEL */
     .section-label {
+      font-family: var(--mono);
       font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
       color: #3a3a38; font-weight: 500; margin-bottom: 40px;
     }
@@ -63,60 +128,49 @@
       margin-bottom: 120px;
     }
 
-    /* Art is a link — reset link styles */
-    .art-link {
-      display: block;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-
+    .art-link { display: block; text-decoration: none; transition: opacity 0.2s; }
     .art-link:hover { opacity: 0.85; }
 
     .art-link img, .art-link .art-placeholder {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      display: block;
+      width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
     }
 
     .art-placeholder {
       background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
-      font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+      color: #555; font-size: 13px;
     }
 
     .album-info { padding-top: 8px; }
 
-    /* Title is a link */
     .album-title-link {
-      text-decoration: none;
-      color: inherit;
-      display: inline-block;
-      margin-bottom: 20px;
-      transition: opacity 0.2s;
+      text-decoration: none; color: inherit;
+      display: inline-block; margin-bottom: 20px; transition: opacity 0.2s;
     }
 
     .album-title-link:hover { opacity: 0.6; }
 
     .album-title {
-      font-size: 28px; font-weight: 500; letter-spacing: -0.01em;
-      text-transform: uppercase; line-height: 1;
+      font-family: var(--grotesk);
+      font-size: 28px; font-weight: 600;
+      text-transform: none; line-height: 1.1; letter-spacing: -0.01em;
+      color: #333333;
     }
 
     .album-meta {
+      font-family: var(--mono);
       font-size: 12px; font-weight: 400; color: #4a4a48;
       line-height: 2.2; letter-spacing: 0.02em; margin-bottom: 36px;
     }
 
     .album-blurb {
+      font-family: var(--mono);
       font-size: 13px; font-weight: 300; line-height: 1.9;
       color: var(--ink); opacity: 0.8; max-width: 460px; margin-bottom: 40px;
     }
 
     .read-more {
+      font-family: var(--mono);
       font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--ink); text-decoration: none;
       border-bottom: 1px solid var(--ink); padding-bottom: 2px;
@@ -125,12 +179,11 @@
 
     .read-more:hover { opacity: 0.5; }
 
-    /* DIVIDER */
     .divider { border: none; border-top: 1px solid #e0dfd9; margin-bottom: 80px; }
 
-    /* FOOTER */
     footer {
       padding: 60px 0 40px; border-top: 1px solid #e0dfd9;
+      font-family: var(--mono);
       font-size: 11px; color: var(--muted); letter-spacing: 0.06em;
     }
 
@@ -138,8 +191,11 @@
     footer a:hover { opacity: 0.6; }
 
     @media (max-width: 700px) {
-      .album-feature { grid-template-columns: 1fr; gap: 32px; }
       body { padding: 0 24px; }
+      .album-feature { grid-template-columns: 1fr; gap: 32px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 80px 0 60px; }
     }
   </style>
 </head>
@@ -150,23 +206,28 @@
     <ul class="nav-links">
       <li><a href="index.html">home</a></li>
       <li><a href="playlists.html">playlists</a></li>
-      <li><a href="#">articles</a></li>
+      <!-- <li><a href="#">articles</a></li> -->
     </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">home</a>
+      <a href="playlists.html">playlists</a>
+      <!-- <a href="#">articles</a> -->
+    </div>
   </nav>
 
   <section class="hero">
     <p>Welcome to hue selector.<br>Let's enjoy some music together.<br>5/15/2026</p>
   </section>
 
-  <!-- NEWEST REVIEW -->
   <p class="section-label">newest review</p>
 
   <div class="album-feature">
-    <!-- Art links to review. Replace art-placeholder with <img> once you have the image. -->
-   <a class="art-link" href="review.html">
-  <img src="images/origin.png" alt="Origin by Vanilla">
-</a>
-
+    <a class="art-link" href="review.html">
+      <img src="images/origin.png" alt="Origin by Vanilla">
+    </a>
     <div class="album-info">
       <a class="album-title-link" href="review.html">
         <h2 class="album-title">Origin</h2>
@@ -177,24 +238,19 @@
         <strong>Release Date:</strong> 20 Sep 2015<br>
         <strong>Record Label:</strong> Self-released
       </div>
-      <p class="album-blurb">
-        A warm, sunny take on modern day Nujabes.
-      </p>
+      <p class="album-blurb">A sample-heavy hip-hop, soul, funk, hi-fidelity electronic album with enough groove to carry your whole weekend. A warm, sunny take on modern day Nujabes, bridging old school soul and modern day electronic music. Easily top 50 albums of all time for me.</p>
       <a class="read-more" href="review.html">Read review →</a>
     </div>
   </div>
 
   <hr class="divider" />
 
-  <!-- ON REPEAT -->
   <p class="section-label">on repeat</p>
 
   <div class="album-feature">
-    <!-- Art links to review. Replace art-placeholder with <img> once you have the image. -->
     <a class="art-link" href="#">
       <div class="art-placeholder">[ album art ]</div>
     </a>
-
     <div class="album-info">
       <a class="album-title-link" href="#">
         <h2 class="album-title">Changes in Air</h2>
@@ -205,16 +261,28 @@
         <strong>Release Date:</strong> Nov 2025<br>
         <strong>Record Label:</strong> —
       </div>
-      <p class="album-blurb">
-        Man, this album is really something. The synths just run. It becomes this meditative state that blurs the line between listening to music and being inside it. Deeply still and deeply alive at the same time.
-      </p>
+      <p class="album-blurb">Man, this album is really something. The synths just run. It becomes this meditative state that blurs the line between listening to music and being inside it. Deeply still and deeply alive at the same time.</p>
       <a class="read-more" href="#">Read review →</a>
     </div>
   </div>
 
   <footer>
+    <a href="https://www.hueselector.com">hue selector</a> &nbsp;·&nbsp;
     <a href="https://www.instagram.com/hueselector/" target="_blank" rel="noopener">instagram</a>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.hamburger').classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('nav')) {
+        document.querySelector('.hamburger').classList.remove('open');
+        document.getElementById('mobileMenu').classList.remove('open');
+      }
+    });
+  </script>
 
 </body>
 </html>
