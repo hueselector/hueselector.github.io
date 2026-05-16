@@ -6,16 +6,15 @@
   <title>New Age — hue selector</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:wght@700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg: #f9f8f5;
-      --ink: #1a1a18;
-      --muted: #888880;
-      --accent: #c8502a;
+        :root {
+      --bg: #f9f8f5; --ink: #1a1a18; --muted: #888880;
       --mono: 'DM Mono', monospace;
+      --serif: 'Lora', serif;
+      --grotesk: 'Space Grotesk', sans-serif;
     }
 
     html { background: var(--bg); color: var(--ink); font-family: var(--mono); }
@@ -26,37 +25,29 @@
       padding: 0 40px;
     }
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 32px 0 0;
-    }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 32px 0 0; position: relative; }
+    .nav-logo { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 48px; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 12px; color: #4a4a48; text-decoration: none; letter-spacing: 0.06em; transition: opacity 0.2s; }
+    .nav-links a:hover { opacity: 0.5; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--ink); transition: all 0.25s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display: none; flex-direction: column; position: absolute; top: calc(100% + 16px); right: 0; background: var(--bg); border: 1px solid #e0dfd9; z-index: 100; min-width: 160px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--mono); font-size: 12px; color: #4a4a48; text-decoration: none; padding: 16px 24px; border-bottom: 1px solid #e0dfd9; letter-spacing: 0.06em; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { background: #f0efe9; }
 
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--ink);
-      text-decoration: none;
-    }
 
-    .nav-links {
-      display: flex;
-      gap: 48px;
-      list-style: none;
-    }
 
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--ink);
-      text-decoration: none;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
 
-    .nav-links a:hover { opacity: 1; }
+
+
+
+
 
     /* PLAYLIST HEADER */
     .playlist-header {
@@ -183,8 +174,14 @@
     <ul class="nav-links">
       <li><a href="index.html">home</a></li>
       <li><a href="playlists.html">playlists</a></li>
-      <li><a href="#">articles</a></li>
     </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">home</a>
+      <a href="playlists.html">playlists</a>
+    </div>
   </nav>
 
   <div class="playlist-header">
@@ -226,7 +223,7 @@
   </div>
 
   <footer>
-    hue selector &nbsp;·&nbsp; all words my own
+    <a href="https://www.hueselector.com" style="color:inherit;text-decoration:none;">hue selector</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/hueselector/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">instagram</a>
   </footer>
 
 </body>
