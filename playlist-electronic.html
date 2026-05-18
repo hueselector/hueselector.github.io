@@ -9,18 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:wght@700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
+    :root {
       --bg: #f9f8f5; --ink: #1a1a18; --muted: #888880;
       --mono: 'DM Mono', monospace;
       --serif: 'Lora', serif;
       --grotesk: 'Space Grotesk', sans-serif;
     }
-
     html { background: var(--bg); color: var(--ink); font-family: var(--mono); }
-
     body { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
-
     nav { display: flex; justify-content: space-between; align-items: center; padding: 32px 0 0; position: relative; }
     .nav-logo { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
     .nav-links { display: flex; gap: 48px; list-style: none; }
@@ -37,11 +33,6 @@
     .mobile-menu a:last-child { border-bottom: none; }
     .mobile-menu a:hover { background: #f0efe9; }
 
-
-
-
-
-
     .playlist-header {
       padding: 100px 0 80px;
       border-bottom: 1px solid #e0dfd9;
@@ -49,14 +40,15 @@
 
     .back-link {
       font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; display: inline-block;
+      color: #4a4a48; text-decoration: none; display: inline-block;
       margin-bottom: 40px; transition: color 0.2s;
     }
     .back-link:hover { color: var(--ink); }
 
     .playlist-header h1 {
-      font-size: 48px; font-weight: 500; letter-spacing: -0.02em;
-      text-transform: uppercase; margin-bottom: 16px; line-height: 1;
+      font-family: var(--grotesk);
+      font-size: 48px; font-weight: 600; color: #333333;
+      letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1;
     }
 
     .playlist-header .tags {
@@ -68,29 +60,31 @@
       color: var(--ink); opacity: 0.75; max-width: 520px;
     }
 
-    /* ALBUM ROWS */
-    .album-row {
+    .album-grid {
       display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 56px;
-      align-items: start;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px 40px;
       padding: 64px 0;
-      border-bottom: 1px solid #e0dfd9;
+    }
+
+    .album-card {
+      display: block;
       text-decoration: none;
       color: inherit;
       transition: opacity 0.2s;
     }
 
-    .album-row:hover { opacity: 0.7; }
+    .album-card:hover { opacity: 0.7; }
 
-    .album-row img {
+    .album-card img {
       width: 100%;
       aspect-ratio: 1;
       object-fit: cover;
       display: block;
+      margin-bottom: 16px;
     }
 
-    .album-row .art-placeholder {
+    .album-card .art-placeholder {
       width: 100%;
       aspect-ratio: 1;
       background: #e8e7e2;
@@ -99,34 +93,36 @@
       justify-content: center;
       color: #aaa;
       font-size: 11px;
+      margin-bottom: 16px;
     }
 
-    .album-row-info { padding-top: 8px; }
+    .album-card-title {
+      font-family: var(--grotesk);
+      font-size: 14px; font-weight: 600; color: #333333;
+      letter-spacing: -0.01em; line-height: 1.2; margin-bottom: 4px;
+    }
 
-    .album-row-title { font-family: var(--grotesk); font-size: 26px; font-weight: 600; color: #333333; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 14px; }
-
-    .album-row-meta {
-      font-size: 12px; font-weight: 400; color: #4a4a48;
-      line-height: 2.2; letter-spacing: 0.02em;
+    .album-card-artist {
+      font-size: 12px; font-weight: 300; color: #4a4a48;
     }
 
     footer {
       padding: 60px 0 40px; border-top: 1px solid #e0dfd9;
       font-size: 11px; color: var(--muted); letter-spacing: 0.06em;
-      margin-top: 40px;
     }
     footer a { color: inherit; text-decoration: none; }
     footer a:hover { opacity: 0.6; }
 
-    @media (max-width: 700px) { .nav-links { display: none; } .hamburger { display: flex; } }
     @media (max-width: 700px) {
-      .album-row { grid-template-columns: 1fr; gap: 28px; }
       body { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .album-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+      .playlist-header h1 { font-size: 36px; }
     }
   </style>
 </head>
 <body>
-
   <nav>
     <a class="nav-logo" href="index.html">hue selector</a>
     <ul class="nav-links">
@@ -149,50 +145,43 @@
     <p class="desc">Sample-heavy, groove-forward, warm. Albums that blur the line between beat-making and full composition.</p>
   </div>
 
-  <!-- ALBUM: ORIGIN -->
-  <a class="album-row" href="review.html">
-    <img src="images/origin.png" alt="Origin by Vanilla">
-    <div class="album-row-info">
-      <p class="album-row-title">Origin</p>
-      <div class="album-row-meta">
-        <strong>Artist:</strong> Vanilla<br>
-        <strong>Genre:</strong> Electronic, Hip-Hop<br>
-        <strong>Year:</strong> 2015
-      </div>
-    </div>
-  </a>
+  <div class="album-grid">
 
+    <!-- ALBUM: ORIGIN -->
+    <a class="album-card" href="review.html">
+      <img src="images/origin.png" alt="Origin by Vanilla">
+      <p class="album-card-title">Origin</p>
+      <p class="album-card-artist">Vanilla</p>
+    </a>
 
-  <!-- ALBUM: HYDEOUT PRODUCTIONS 2ND COLLECTION -->
-  <a class="album-row" href="review-hydeout2.html">
-    <div class="art-placeholder">[ album art ]</div>
-    <div class="album-row-info">
-      <p class="album-row-title">Hydeout Productions 2nd Collection</p>
-      <div class="album-row-meta">
-        <strong>Artist:</strong> Various Artists<br>
-        <strong>Genre:</strong> Hip-Hop, Electronic<br>
-        <strong>Year:</strong> 2007
-      </div>
-    </div>
-  </a>
+    <!-- ALBUM: HYDEOUT PRODUCTIONS 2ND COLLECTION -->
+    <!-- Replace art-placeholder with: <img src="images/hydeout2.png" alt="Hydeout Productions 2nd Collection"> -->
+    <a class="album-card" href="review-hydeout2.html">
+      <div class="art-placeholder">[ album art ]</div>
+      <p class="album-card-title">Hydeout Productions 2nd Collection</p>
+      <p class="album-card-artist">Various Artists</p>
+    </a>
 
-  <!-- Add more albums below following the same pattern:
-  <a class="album-row" href="your-review-page.html">
-    <img src="images/your-image.png" alt="Album by Artist">
-    <div class="album-row-info">
-      <p class="album-row-title">Album Title</p>
-      <div class="album-row-meta">
-        <strong>Artist:</strong> Artist Name<br>
-        <strong>Genre:</strong> Genre<br>
-        <strong>Year:</strong> Year
-      </div>
-    </div>
-  </a>
-  -->
+    <!-- ADD MORE: copy a block above, update href, img src, title, artist -->
+
+  </div>
 
   <footer>
-    <a href="https://www.hueselector.com">hue selector</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/hueselector/" target="_blank" rel="noopener">instagram</a>
+    <a href="https://www.hueselector.com">hue selector</a> &nbsp;·&nbsp;
+    <a href="https://www.instagram.com/hueselector/" target="_blank" rel="noopener">instagram</a>
   </footer>
+  <script>
+    function toggleMenu() {
+      document.querySelector('.hamburger').classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('nav')) {
+        document.querySelector('.hamburger').classList.remove('open');
+        document.getElementById('mobileMenu').classList.remove('open');
+      }
+    });
+  </script>
 
 </body>
 </html>
