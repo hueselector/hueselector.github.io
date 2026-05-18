@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hydeout Productions 2nd Collection — hue selector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:wght@700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f9f8f5; --ink: #1a1a18; --muted: #888880;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Lora', serif;
+      --grotesk: 'Space Grotesk', sans-serif;
+    }
+    html { background: var(--bg); color: var(--ink); font-family: var(--mono); }
+    body { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 32px 0 0; position: relative; }
+    .nav-logo { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 48px; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 12px; color: #4a4a48; text-decoration: none; letter-spacing: 0.06em; transition: opacity 0.2s; }
+    .nav-links a:hover { opacity: 0.5; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--ink); transition: all 0.25s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display: none; flex-direction: column; position: absolute; top: calc(100% + 16px); right: 0; background: var(--bg); border: 1px solid #e0dfd9; z-index: 100; min-width: 160px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: var(--mono); font-size: 12px; color: #4a4a48; text-decoration: none; padding: 16px 24px; border-bottom: 1px solid #e0dfd9; letter-spacing: 0.06em; }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { background: #f0efe9; }
+
+    .review-wrap { padding-top: 80px; }
+    .back-link { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #4a4a48; text-decoration: none; display: inline-block; margin-bottom: 60px; transition: color 0.2s; }
+    .back-link:hover { color: var(--ink); }
+
+    .album-hero { width: 100%; max-width: 560px; aspect-ratio: 1; object-fit: cover; display: block; margin: 0 auto 64px; }
+    .album-hero-placeholder { width: 100%; max-width: 560px; aspect-ratio: 1; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); display: flex; align-items: center; justify-content: center; color: #555; font-size: 13px; margin: 0 auto 64px; }
+
+    .review-body { max-width: 560px; margin: 0 auto; }
+    .album-title { font-family: var(--grotesk); font-size: 32px; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; color: #333333; margin-bottom: 24px; }
+    .review-meta { font-size: 12px; font-weight: 400; line-height: 2.4; color: #4a4a48; letter-spacing: 0.02em; margin-bottom: 52px; padding-bottom: 52px; border-bottom: 1px solid #e0dfd9; }
+
+    .review-section { margin-bottom: 52px; }
+    .label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #3a3a38; margin-bottom: 14px; display: block; font-weight: 500; }
+    .body-text { font-size: 13px; font-weight: 300; line-height: 1.9; opacity: 0.85; }
+    .track-list { list-style: none; font-size: 13px; font-weight: 300; line-height: 2.2; opacity: 0.85; }
+    .track-list li::before { content: "— "; color: var(--muted); }
+
+    .verdict-block { border-top: 1px solid #e0dfd9; padding: 36px 0 0; margin-bottom: 52px; }
+    .verdict-text { font-size: 13px; font-weight: 300; line-height: 1.9; opacity: 0.85; }
+    .score { font-weight: 500; font-size: 13px; }
+
+    .also-check { border-top: 1px solid #e0dfd9; padding-top: 52px; }
+    .also-check a { display: inline-block; text-decoration: none; color: inherit; transition: opacity 0.2s; }
+    .also-check a:hover { opacity: 0.6; }
+    .also-check .rec-art-placeholder { width: 220px; aspect-ratio: 1; background: #e8e7e2; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 11px; margin-bottom: 16px; }
+    .also-check img { width: 220px; aspect-ratio: 1; object-fit: cover; display: block; margin-bottom: 16px; }
+    .rec-name { font-family: var(--grotesk); font-size: 14px; font-weight: 600; color: #333333; margin-bottom: 4px; }
+    .rec-artist { font-size: 12px; font-weight: 300; color: var(--muted); }
+
+    footer { padding: 80px 0 40px; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; border-top: 1px solid #e0dfd9; margin-top: 80px; }
+    footer a { color: inherit; text-decoration: none; }
+    footer a:hover { opacity: 0.6; }
+
+    @media (max-width: 600px) {
+      body { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .album-title { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html">hue selector</a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="playlists.html">playlists</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">home</a>
+      <a href="playlists.html">playlists</a>
+    </div>
+  </nav>
+
+  <div class="review-wrap">
+    <a class="back-link" href="javascript:history.back()">← Back</a>
+
+    <!-- Replace with: <img class="album-hero" src="images/hydeout2.jpg" alt="Hydeout Productions 2nd Collection"> -->
+    <div class="album-hero-placeholder">[ album art ]</div>
+
+    <div class="review-body">
+      <h1 class="album-title">Hydeout Productions 2nd Collection</h1>
+      <div class="review-meta">
+        <strong>Artist:</strong> Various Artists<br>
+        <strong>Genre:</strong> Hip-Hop, Electronic<br>
+        <strong>Release Date:</strong> 11 Nov 2007<br>
+        <strong>Record Label:</strong> Hydeout Productions
+      </div>
+
+      <div class="review-section">
+        <a href="https://www.youtube.com/watch?v=tlod3JmmhgQ&list=PLrUnQJ9SnItWdjXnxJWhv8NTWkb87ZXMM" target="_blank" rel="noopener" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px;">Listen on YouTube →</a>
+      </div>
+
+      <div class="review-section">
+        <span class="label"><strong>About</strong></span>
+        <p class="body-text">Nujabes' Hydeout Productions label was famously anti-marketing — no advertising, no press, just music. This compilation is the second and final various artists release from the label before Nujabes' passing in 2010, and it carries that same quiet confidence. It pulls together collaborators including Shing02, Uyama Hiroto, Emancipator, and C.L. Smooth into something that feels less like a compilation and more like a complete album. Put it on from start to finish. That's the only way to listen to it.</p>
+      </div>
+
+      <div class="review-section">
+        <span class="label"><strong>Favorite track</strong></span>
+        <ul class="track-list">
+          <li>Imaginary Folklore (feat. Clammbon)</li>
+        </ul>
+      </div>
+
+      <div class="review-section">
+        <span class="label"><strong>Must listen to tracks</strong></span>
+        <ul class="track-list">
+          <li>Hikari (feat. Substantial)</li>
+          <li>Another Reflection</li>
+          <li>With Rainy Eyes</li>
+          <li>Luv(sic) Modal Soul Remix (feat. Shing02)</li>
+        </ul>
+      </div>
+
+      <div class="verdict-block">
+        <span class="label"><strong>Verdict</strong></span>
+        <p class="verdict-text">One of my favorite albums. <span class="score">10/10</span></p>
+      </div>
+
+      <div class="also-check">
+        <span class="label"><strong>If you like this, check out</strong></span>
+        <!-- Replace with: <img src="images/your-image.jpg" alt="Album by Artist"> -->
+        <a href="#">
+          <div class="rec-art-placeholder">[ album art ]</div>
+          <p class="rec-name">Nujabes Pray Reflections</p>
+          <p class="rec-artist">Haruka Nakamura</p>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <a href="https://www.hueselector.com">hue selector</a> &nbsp;·&nbsp;
+    <a href="https://www.instagram.com/hueselector/" target="_blank" rel="noopener">instagram</a>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.hamburger').classList.toggle('open');
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('nav')) {
+        document.querySelector('.hamburger').classList.remove('open');
+        document.getElementById('mobileMenu').classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
